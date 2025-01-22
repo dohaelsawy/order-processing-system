@@ -27,7 +27,8 @@ from app.routes import auth
 from app.routes import product
 from app.utils import helper
 from app.routes import order
-
+from app.services import email
+from app.routes import payment
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

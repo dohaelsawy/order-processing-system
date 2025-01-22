@@ -10,9 +10,13 @@ from flask_jwt_extended import jwt_required
 def add_product():
     data = request.json
 
-    name = data['name']
-    price = data['price']
-    amount = data['amount']
+    name = data.get('name')
+    price = data.get('price')
+    amount = data.get('amount')
+
+    if not name or not price or not amount:
+        return jsonify({"error": "Product name, price and mount are required"}), 400
+
 
     if price < 0 or amount < 0 :
         return jsonify({"message":"the value of price and amount can't be negative"}), 400
