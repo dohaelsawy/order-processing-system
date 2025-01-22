@@ -19,12 +19,13 @@ jwt = JWTManager(app)
 
 
 users = mongo.db.users
-inventory = mongo.db.products
+products = mongo.db.products
 orders = mongo.db.orders
 
 
 from app.routes import auth
-
+from app.routes import product
+from app.utils import helper
 
 
 if __name__ == "__main__":
