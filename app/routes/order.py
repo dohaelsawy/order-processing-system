@@ -48,9 +48,7 @@ def create_order():
                     product = products.find_one({"_id": ObjectId(product_id)})
                     if not product:
                         return jsonify({"error": f"Product with ID {product_id} not found"}), 404
-                    
-                    print(product)
-                    
+                                        
                     if product["amount"] < quantity:
                         return jsonify({"error": f"Not enough stock for product {product['name']}"}), 400
                     
