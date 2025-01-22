@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_login import LoginManager
 from app.config import Config
 from flask_pymongo import PyMongo
@@ -29,6 +29,11 @@ from app.utils import helper
 from app.routes import order
 from app.services import email
 from app.routes import payment
+
+
+@app.errorhandler(500)
+def err500(e):
+    return jsonify({"message":f"something went wrong, {e}"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
