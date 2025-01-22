@@ -17,7 +17,7 @@ mail = Mail(app)
 jwt = JWTManager(app)
 
 
-
+client = mongo.cx
 users = mongo.db.users
 products = mongo.db.products
 orders = mongo.db.orders
@@ -26,6 +26,7 @@ orders = mongo.db.orders
 from app.routes import auth
 from app.routes import product
 from app.utils import helper
+from app.routes import order
 
 
 if __name__ == "__main__":
