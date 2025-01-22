@@ -17,6 +17,8 @@ def payment():
     if not check_payment_status() :
         return jsonify({"message":"payment didn't complete correctly"})
     
+    orders.update_one({'_id':ObjectId(order_id)},{"$set":{'payment_status':'successful'}})
+    
     order = orders.find_one({"_id":ObjectId(order_id)})
     
     if not order :
