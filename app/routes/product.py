@@ -1,8 +1,12 @@
 from app import app, products
 from flask import json, request, jsonify
 from app.utils import helper
+from flask_jwt_extended import jwt_required
+
+
 
 @app.post('/add-product')
+@jwt_required() 
 def add_product():
     data = request.json
 
