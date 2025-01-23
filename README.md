@@ -1,7 +1,7 @@
-# Order Processing System
+# :shopping_cart: Order Processing System
 simplified Order Processing System for an online store.
 
-## Features
+## :sparkles: Features
 
 - **Stock Management**: Validate product availability and update stock counts after successful orders.
 - **Payment Processing**: Integrate a mock payment gateway to simulate payment transactions.
@@ -12,9 +12,9 @@ simplified Order Processing System for an online store.
 - **Containerization**: Package the application into a Docker container for easy deployment.
 - **Container Registry Integration**: Push Docker images to a container registry like Docker Hub.
 
-## Setup Instructions
+## :hammer_and_wrench: Setup Instructions
 
-### **create .env**
+### :seedling: **create .env**
 - first create a `.env` file in the root of the project
 - attach the following environment variables
 ```
@@ -33,7 +33,7 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 ---
 
-### **1. Setup via Docker Compose**
+### :whale: **1. Setup via Docker Compose**
 1. **Ensure Docker and Docker Compose are installed**:
    - [Install Docker](https://docs.docker.com/get-docker/)
    - [Install Docker Compose](https://docs.docker.com/compose/install/)
@@ -56,7 +56,7 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 ---
 
-### **2. Setup via Python Virtual Environment**
+### :snake: **2. Setup via Python Virtual Environment**
 1. **Install Python and Virtual Environment**:
    - Ensure Python (3.x) is installed: [Download Python](https://www.python.org/downloads/)
    - Install `virtualenv` if not already installed:
@@ -96,4 +96,4 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 ---
 
-Both methods will get the application up and running, so choose the one that best suits your environment.
+Both methods will get the application up and running, so choose the one that best suits your environment. :tada:
