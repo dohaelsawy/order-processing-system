@@ -1,26 +1,48 @@
 from app import app, products
-from flask import json, request, jsonify
+from flask import request, jsonify
 from app.utils import helper
 from flask_jwt_extended import jwt_required
 
 
-
 @app.post('/add-product')
-@jwt_required() 
+@jwt_required()
 def add_product():
     data = request.json
 
+    validation_error = validate_product_data(data)
+    if validation_error:
+        return jsonify(validation_error), 400
+
+    try:
+        product = process_product(data)
+        return jsonify({
+            "message": "Success",
+            "product": helper.json_converter(product)
+        }), 201
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred", "details": str(e)}), 500
+
+
+
+def validate_product_data(data):
     name = data.get('name')
     price = data.get('price')
     amount = data.get('amount')
 
-    if not name or not price or not amount:
-        return jsonify({"error": "Product name, price and mount are required"}), 400
-
-
-    if price < 0 or amount < 0 :
-        return jsonify({"message":"the value of price and amount can't be negative"}), 400
+    if not name or price is None or amount is None:
+        return {"error": "Product name, price, and amount are required"}
     
+    if price < 0 or amount < 0:
+        return {"error": "The value of price and amount can't be negative"}
+
+    return None
+
+
+def process_product(data):
+    name = data['name']
+    price = data['price']
+    amount = data['amount']
+
     product = products.find_one({"name":name})
 
     if not product:
@@ -42,7 +64,4 @@ def add_product():
             {"$set":product}
         )
 
-    return jsonify({"message":"success",
-                    "product":helper.json_converter(product)}), 201
-
-
+    return product
