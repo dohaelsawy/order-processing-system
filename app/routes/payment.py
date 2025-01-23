@@ -4,35 +4,33 @@ from app.services.email import send_order_confirmation_email
 from bson import ObjectId
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
-@app.post('/payment')
+@app.post('/mock_payment_gateway')
 @jwt_required()
-def payment():
+def mock_payment_gateway():
     data = request.json
+    card_num = data.get('card_number')
     order_id = data.get('order_id')
+
+    if not card_num or not order_id:
+        return jsonify({'error': 'Invalid payment details'}), 400
+    
     to_email = get_jwt_identity()
-    from_email = app.config['MAIL_USERNAME']
+    from_email = app.config.get('MAIL_USERNAME')
+    
+    if not from_email:
+        return jsonify({'error': 'Mail configuration missing'}), 500
 
-    if not order_id:
-        return jsonify({"message":"order is required"})
+    order = orders.find_one({"_id": ObjectId(order_id)})
+    if not order:
+        return jsonify({'error': 'Order does not exist'}), 400
 
-    if not check_payment_status() :
-        return jsonify({"message":"payment didn't complete correctly"})
-    
-    orders.update_one({'_id':ObjectId(order_id)},{"$set":{'payment_status':'successful'}})
-    
-    order = orders.find_one({"_id":ObjectId(order_id)})
-    
-    if not order :
-        return jsonify({"message":"no such order exist"})
-    
-    is_send = send_order_confirmation_email(from_email, to_email, order)
-    
-    if not is_send:
-        return jsonify({"message":"email doesn't send, please wait some time."})
-    
-    return jsonify({"message":"email sent"})
+    if card_num and len(card_num) == 16:
+        orders.update_one({'_id': ObjectId(order_id)}, {"$set": {'payment_status': 'success'}})
 
+        is_send = send_order_confirmation_email(from_email, to_email, order)
+        if not is_send:
+            return jsonify({"message": "Email didn't send, please wait some time."}), 503
 
-
-def check_payment_status():
-    return True
+        return jsonify({'message': 'Success', 'transaction_id': 'txn_12345'}), 200
+    else:
+        return jsonify({'error': 'Payment declined'}), 402
