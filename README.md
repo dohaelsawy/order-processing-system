@@ -14,6 +14,10 @@ simplified Order Processing System for an online store.
 
 ## :hammer_and_wrench: Setup Instructions
 
+### :framed_picture: Ready Docker Imgage
+- `https://hub.docker.com/r/dohaelsawi/order-processing-system-flask-app`
+
+---
 ### :seedling: **create .env**
 - first create a `.env` file in the root of the project
 - attach the following environment variables
@@ -33,7 +37,7 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 ---
 
-### :whale: **1. Setup via Docker Compose**
+### :whale: **Setup via Docker Compose**
 1. **Ensure Docker and Docker Compose are installed**:
    - [Install Docker](https://docs.docker.com/get-docker/)
    - [Install Docker Compose](https://docs.docker.com/compose/install/)
@@ -56,7 +60,7 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 ---
 
-### :snake: **2. Setup via Python Virtual Environment**
+### :snake: **Setup via Python Virtual Environment**
 1. **Install Python and Virtual Environment**:
    - Ensure Python (3.x) is installed: [Download Python](https://www.python.org/downloads/)
    - Install `virtualenv` if not already installed:
@@ -95,5 +99,6 @@ You can set up the application using **Docker Compose** or a **Python virtual en
    - The app will run at [http://127.0.0.1:5000](http://127.0.0.1:5000) by default.
 
 ---
+
 
 Both methods will get the application up and running, so choose the one that best suits your environment. :tada:
