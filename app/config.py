@@ -20,6 +20,7 @@ class Config():
     LOGGING_LEVEL = logging.DEBUG  
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     LOGGING_FILE = 'app.log' 
+    STRIPE_SECRET_KEY=os.getenv("STRIPE_SECRET_KEY")
 
     @staticmethod
     def init_app(app):

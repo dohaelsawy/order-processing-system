@@ -4,7 +4,7 @@ from app.config import Config
 from flask_pymongo import PyMongo
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
-
+import stripe
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -15,6 +15,8 @@ login_manager = LoginManager(app)
 mongo = PyMongo(app)
 mail = Mail(app)
 jwt = JWTManager(app)
+
+stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
 
 client = mongo.cx

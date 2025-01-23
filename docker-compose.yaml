@@ -19,6 +19,7 @@ services:
       - MAIL_USE_SSL=${MAIL_USE_SSL}
       - MAIL_USERNAME=${MAIL_USERNAME}
       - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
     depends_on:
       - mongo
     volumes:
