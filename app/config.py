@@ -1,4 +1,5 @@
 import os 
+import logging
 from dotenv import load_dotenv
 from datetime import timedelta
 
@@ -16,3 +17,16 @@ class Config():
     MAIL_USE_TLS=True
     MAIL_USERNAME=os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD=os.getenv("MAIL_PASSWORD")
+    LOGGING_LEVEL = logging.DEBUG  
+    LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    LOGGING_FILE = 'app.log' 
+
+    @staticmethod
+    def init_app(app):
+        logging.basicConfig(
+            level=Config.LOGGING_LEVEL,
+            format=Config.LOGGING_FORMAT,
+            handlers=[
+                logging.FileHandler(Config.LOGGING_FILE),
+            ]
+        )

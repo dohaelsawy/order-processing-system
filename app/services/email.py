@@ -1,9 +1,11 @@
+import logging
 from flask_mail import Message
 from app import mail
 from flask import jsonify
 
+logger = logging.getLogger(__name__)
 
-def send_order_confirmation_email(from_email,to_email, order):
+def send_order_confirmation_email(from_email, to_email, order):
     try:
         subject = f"Order Confirmation - Order #{str(order['_id'])}"
         body = f"""
@@ -36,8 +38,8 @@ def send_order_confirmation_email(from_email,to_email, order):
         msg = Message(subject=subject, sender=from_email, recipients=[to_email])
         msg.body = body
         mail.send(msg)
-        return jsonify({"message":"email send successfully"})
-    except Exception as e:
-        return jsonify({"message":f"there is something wrong happens {e}"})
-
+        return jsonify({"message": "Email sent successfully"})
     
+    except Exception as e:
+        logger.error(f"Failed to send order confirmation email for order {order['_id']} to {to_email}: {str(e)}")
+        return jsonify({"message": f"There is something wrong, error: {e}"}), 500

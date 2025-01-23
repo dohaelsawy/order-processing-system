@@ -8,7 +8,7 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
+Config.init_app(app)
 
 
 login_manager = LoginManager(app)
