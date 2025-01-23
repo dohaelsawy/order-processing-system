@@ -4,7 +4,7 @@
 - routes 
     - auth (login, register)
     - order (create order)
-    - payment (mock payment gateway)
+    - payment (create payment intent, confirm-payment)
     - product (create product)
 
 ## General Info
@@ -209,56 +209,67 @@
         ```
 
 ## Routes - Payment
-- mock payment gateway 
-    - Endpoint: `/mock-payment-gateway`
+- create payment intent 
+    - Endpoint: `/create-payment-intent`
     - Method: POST
     - Authentication: Requires JWT token (using @jwt_required()decorator).
-    - Description: mock payment process
+    - Description: create payment intent at stripe
     - Request Payload: The request body must be in JSON format and contain the following fields:
-        - card_number (string): The 16-digit card number for processing the payment (required).
-        - order_id (string): The ID of the order for which the payment is being processed (required).
+        - order_id (string, required): The ID of the order for which the payment is being initiated.
         ```json
-            {
-            "card_number": "1234567812345678",
-            "order_id": "64b3fcf95724dc1b6f8a4a90"
-            }
+            {"order_id": "<order_id>"}
         ```
     - Response: The response will be in JSON format.
-        - Success (201):
+        - Success (200):
         ```json
             {
-            "message": "Success",
-            "transaction_id": "txn_12345"
+            "client_secret": "<client_secret>",
+            "payment_intent_id": "<payment_intent_id>"
             }
         ```
-        - Error (400):
+        - Error (404):
         ```json
             {
-            "error": "Invalid payment details"
-            }
-        ```
-        or 
-        ```json
-            {
-            "error": "Order does not exist"
-            }
-        ```
-        - Error (402):
-        ```json
-            {
-            "error": "Payment declined"
-            }
-        ```
-        - Error (503):
-        ```json
-            {
-            "message": "Email didn't send, please wait some time."
+            "error": "Order not found"
             }
         ```
         - Error (500):
         ```json
             {
-            "error": "An unexpected error occurred",
-            "details": "Error message here"
+            "error": "<error_message>"
             }
         ```
+
+- confirm payment 
+    - Endpoint: `/confirm-payment`
+    - Method: POST
+    - Authentication: Requires JWT token (using @jwt_required()decorator).
+    - Description: confirm a stripe payment intent
+    - Request Payload: The request body must be in JSON format and contain the following fields:
+        - payment_intent_id (string, required): The ID of the PaymentIntent to be confirmed.
+        - payment_method_id (string, required): The ID of the payment method to use for confirmation.
+        ```json
+            {
+            "payment_intent_id": "<payment_intent_id>",
+            "payment_method_id": "<payment_method_id>"
+            }
+        ```
+    - Response: The response will be in JSON format.
+        - Success (200):
+        ```json
+            {
+            "message": "Payment succeeded"
+            }
+        ```
+        - Error (404):
+        ```json
+            {
+            "error": "Payment failed"
+            }
+        ```
+        - Error (500):
+        ```json
+            {
+            "error": "<error_message>"
+            }
+        ``` 
