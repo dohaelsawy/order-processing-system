@@ -10,6 +10,7 @@ def payment():
     data = request.json
     order_id = data.get('order_id')
     to_email = get_jwt_identity()
+    from_email = app.config['MAIL_USERNAME']
 
     if not order_id:
         return jsonify({"message":"order is required"})
@@ -24,17 +25,12 @@ def payment():
     if not order :
         return jsonify({"message":"no such order exist"})
     
-    is_send = send_order_confirmation_email(app.config['MAIL_USERNAME'],to_email, order_id, order['products'],order['total_amount']
-                                            ,order['order_date'],order['status'], order['shipping_address'],order['payment_status'],
-                                            order['payment_method'])
+    is_send = send_order_confirmation_email(from_email, to_email, order)
     
     if not is_send:
         return jsonify({"message":"email doesn't send, please wait some time."})
     
     return jsonify({"message":"email sent"})
-
-
-
 
 
 

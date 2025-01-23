@@ -43,6 +43,6 @@ def add_product():
         )
 
     return jsonify({"message":"success",
-                    "product":json.dumps(product, default=helper.json_converter)}), 201
+                    "product":helper.json_converter(product)}), 201
 
 
