@@ -30,8 +30,9 @@ MAIL_SERVER=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USE_TLS=True
 MAIL_USE_SSL=False
-MAIL_USERNAME=dohaelsawy18@gmail.com
-MAIL_PASSWORD=efiktolvvsbcmsrt 
+MAIL_USERNAME=<your email address>
+MAIL_PASSWORD=******
+STRIPE_SECRET_KEY=*********
 ```
 You can set up the application using **Docker Compose** or a **Python virtual environment**.
 
