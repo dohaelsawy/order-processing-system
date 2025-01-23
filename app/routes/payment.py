@@ -7,7 +7,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 
 logger = logging.getLogger(__name__)
 
-@app.post('/mock_payment_gateway')
+@app.post('/mock-payment-gateway')
 @jwt_required()
 def mock_payment_gateway():
     try:
