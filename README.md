@@ -12,6 +12,10 @@ simplified Order Processing System for an online store.
 - **Containerization**: Package the application into a Docker container for easy deployment.
 - **Container Registry Integration**: Push Docker images to a container registry like Docker Hub.
 
+## Pre-requisites
+- Setup stripe test secrete api key 
+- Python version > 3.x
+- Docker, Docker compose 
 ## :hammer_and_wrench: Setup Instructions
 
 ### :framed_picture: Ready Docker Imgage
