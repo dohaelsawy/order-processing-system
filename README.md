@@ -107,3 +107,7 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 
 Both methods will get the application up and running, so choose the one that best suits your environment. :tada:
+
+
+## Run Tests
+- `make tests`
