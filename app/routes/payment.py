@@ -40,6 +40,9 @@ def create_payment_intent():
 @app.post('/confirm-payment')
 @jwt_required()
 def confirm_payment():
+    return confirm_payment_func(orders)
+
+def confirm_payment_func(orders):
     data = request.json
     payment_intent_id = data['payment_intent_id']
     payment_method_id = data['payment_method_id']

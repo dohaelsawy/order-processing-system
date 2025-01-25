@@ -9,7 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 @app.post("/register")
-def register_user():
+def register():
+    return register_user(users)
+
+def register_user(users):
     try:
         data = request.json
         email = data.get("email")
@@ -32,10 +35,18 @@ def register_user():
         return jsonify({"message": "User registered successfully"}), 201
     except Exception as e:
         logger.error(f"Error occurred during user registration: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
+        return jsonify({"error": f"Internal server error {e}"}), 500
+
+
+
+
+
 
 @app.post("/login")
-def login_user():
+def login():
+    return login_user(users)
+
+def login_user(users):
     try:
         data = request.json
         email = data.get("email")

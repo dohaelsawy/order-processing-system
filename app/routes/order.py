@@ -13,6 +13,11 @@ logger = logging.getLogger(__name__)
 @app.post("/create-order")
 @jwt_required()
 def create_order():
+    return create_order_func(orders)
+
+
+
+def create_order_func(orders):
     user_email = get_jwt_identity()
     data = request.json
 
@@ -23,8 +28,8 @@ def create_order():
     try:
         with client.start_session() as session:
             with session.start_transaction():
-                total_amount, order_products = process_order_products(data["products"])
-                order_id = save_order(user_email, order_products, total_amount, data)
+                total_amount, order_products = process_order_products(products, data["products"])
+                order_id = save_order(user_email, order_products, total_amount, orders, data)
                 created_order = orders.find_one({"_id": order_id})
 
         return jsonify({
@@ -42,6 +47,8 @@ def create_order():
         logger.error(f"Unexpected error: {str(e)}")
         return jsonify({"error": "An unexpected error occurred", "details": str(e)}), 500
 
+
+
 def validate_order_data(data):
     product_list = data.get("products")
     shipping_address = data.get("shipping_address")
@@ -58,7 +65,9 @@ def validate_order_data(data):
 
     return None
 
-def process_order_products(product_list):
+
+
+def process_order_products(products, product_list):
     total_amount = 0
     order_products = []
 
@@ -92,7 +101,9 @@ def process_order_products(product_list):
 
     return total_amount, order_products
 
-def save_order(user_email, order_products, total_amount, data):
+
+
+def save_order(user_email, order_products, total_amount, orders,data):
     order = {
         "user_id": user_email,
         "products": order_products,

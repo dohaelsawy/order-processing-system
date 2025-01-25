@@ -9,6 +9,11 @@ logger = logging.getLogger(__name__)
 @app.post('/add-product')
 @jwt_required()
 def add_product():
+    return add_product_func(products)
+
+
+
+def add_product_func(products):
     data = request.json
 
     validation_error = validate_product_data(data)
@@ -16,7 +21,7 @@ def add_product():
         return jsonify(validation_error), 400
 
     try:
-        product = process_product(data)
+        product = process_product(products, data)
         return jsonify({
             "message": "Success",
             "product": helper.json_converter(product)
@@ -24,6 +29,8 @@ def add_product():
     except Exception as e:
         logger.error(f"Unexpected error while adding product: {str(e)}")
         return jsonify({"error": "An unexpected error occurred", "details": str(e)}), 500
+
+
 
 def validate_product_data(data):
     name = data.get('name')
@@ -40,7 +47,9 @@ def validate_product_data(data):
 
     return None
 
-def process_product(data):
+
+
+def process_product(products, data):
     name = data['name']
     price = data['price']
     amount = data['amount']
@@ -58,17 +67,19 @@ def process_product(data):
 
         else:
             updated_amount = amount + product['amount']
-            product.update({
+            update_data = {
+                "name":name,
                 "price": price,
                 "amount": updated_amount
-            })
+            }
             products.update_one(
-                {"name": name},
-                {"$set": product}
+                {"_id": product['_id']},
+                {"$set": update_data}
             )
-        
+            product.update(update_data)
         return product
     
     except Exception as e:
         logger.error(f"Error while processing product {name}: {str(e)}")
-        raise
+        raise e
+    

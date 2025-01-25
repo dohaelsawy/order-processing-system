@@ -35,7 +35,7 @@ from app.routes import payment
 
 @app.errorhandler(500)
 def err500(e):
-    return jsonify({"message":f"something went wrong, {e}"})
+    return jsonify({"error":f"something went wrong, {e}"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
