@@ -9,6 +9,7 @@ simplified Order Processing System for an online store.
 - **Error Handling**: Gracefully handle issues such as stock unavailability or payment failures.
 - **User Authentication**: Ensure only registered users can place orders (Bonus).
 - **Logging**: Record important events and errors during order processing (Bonus).
+- **Testing**: Unit tests to verify the functionality and reliability of the order processing system (Bonus).
 - **Containerization**: Package the application into a Docker container for easy deployment.
 - **Container Registry Integration**: Push Docker images to a container registry like Docker Hub.
 
@@ -107,3 +108,7 @@ You can set up the application using **Docker Compose** or a **Python virtual en
 
 
 Both methods will get the application up and running, so choose the one that best suits your environment. :tada:
+
+
+## Run Tests
+- `make tests`
